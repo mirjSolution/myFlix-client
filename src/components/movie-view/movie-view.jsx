@@ -1,27 +1,52 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
   constructor() {
     super();
-
-    this.state = {};
   }
 
   render() {
-    const { movie, onClick } = this.props;
+    const { movie, user } = this.props;
 
     if (!movie) return null;
 
     // if (this.state.initialState === '') return ;
 
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      let checkMovieExistLS = [];
+      checkMovieExistLS = JSON.parse(localStorage.getItem('favoriteMovies'));
+      if (checkMovieExistLS.includes(movie.title)) {
+        alert('Movie already added on favorite list');
+        return;
+      }
+
+      axios
+        .post(
+          `https://myflix3.herokuapp.com/users/${user}/movies/${movie.title}`
+        )
+        .then((response) => {
+          console.log(response);
+          checkMovieExistLS.push(movie.title);
+          localStorage.setItem(
+            'favoriteMovies',
+            JSON.stringify(checkMovieExistLS)
+          );
+          alert('Movie successfully added to favorite');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
     return (
       <div className='movie-view'>
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '25rem' }}>
           <Card.Img variant='top' src={movie.imagePath} />
           <Card.Body>
             <Card.Title>{movie.title}</Card.Title>
@@ -37,8 +62,18 @@ export class MovieView extends React.Component {
               <span className='label text-danger'>Director: </span>
               <span className='value'>{movie.director.name}</span>
             </Card.Text>
-            <Button onClick={() => onClick()} variant='primary'>
-              Back
+            <Link to={`/`}>
+              <Button variant='link'>Back</Button>
+            </Link>
+            <Link to={`/movies/directors/${movie.director.name}`}>
+              <Button variant='link'>Director</Button>
+            </Link>
+
+            <Link to={`/movies/genre/${movie.genre.name}`}>
+              <Button variant='link'>Genre</Button>
+            </Link>
+            <Button variant='link' onClick={(e) => handleSubmit(e)}>
+              Add to favorite
             </Button>
           </Card.Body>
         </Card>
@@ -46,22 +81,3 @@ export class MovieView extends React.Component {
     );
   }
 }
-
-MovieView.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    imagePath: PropTypes.string.isRequired,
-    genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }),
-    director: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      bio: PropTypes.string.isRequired,
-      birth: PropTypes.string.isRequired,
-      death: PropTypes.string,
-    }),
-  }).isRequired,
-  onClick: PropTypes.func.isRequired,
-};

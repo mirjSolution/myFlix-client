@@ -1,11 +1,15 @@
 {
   "dependencies": {
     "axios": "^0.21.0",
+    "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
-    "react-icons": "^3.11.0"
+    "react-icons": "^3.11.0",
+    "react-moment": "^1.0.0",
+    "react-router-dom": "^5.2.0",
+    "uninstall": "0.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -13,5 +17,8 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "sass": "^1.28.0"
+  },
+  "scripts": {
+    "dev": "parcel src/index.html"
   }
 }
