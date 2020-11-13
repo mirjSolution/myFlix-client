@@ -1,3 +1,12 @@
-.genre-view {
-  color: black !important;
+.genre-description {
+  margin-top: 120px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .genre-list {
+    margin-bottom: 100px;
+    padding: 20px;
+  }
 }

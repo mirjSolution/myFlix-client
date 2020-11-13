@@ -1,0 +1,12 @@
+.director-description {
+  margin-top: 120px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .director-list {
+    margin-bottom: 100px;
+    padding: 20px;
+  }
+}

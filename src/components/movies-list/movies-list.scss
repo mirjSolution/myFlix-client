@@ -1,6 +1,12 @@
-.movie-list {
-  height: 100vh;
+.movie-description {
+  margin-top: 120px;
+  min-height: 100px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  .movie-list {
+    margin-bottom: 100px;
+    padding: 20px;
+  }
 }

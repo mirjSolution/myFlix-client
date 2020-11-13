@@ -1,1 +1,9 @@
-export const SET_MOVIES = 'SET_MOVIES';
+export const GET_MOVIES = 'GET_MOVIES';
+export const GET_MOVIE = 'GET_MOVIE';
+export const GET_GENRE = 'GET_GENRE';
+export const GET_DIRECTOR = 'GET_DIRECTOR';
+export const SET_FILTER = 'SET_FILTER';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainViewNavbar from './components/main-view/main-view-navbar';
 import MainViewFooter from './components/main-view/main-view-footer';
 import MovieList from './components/movies-list/movies-list';
+import Routes from './components/routing/routes';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -16,6 +17,7 @@ const App = () => {
           <MainViewNavbar />
           <Switch>
             <Route exact path='/' component={MovieList} />
+            <Route component={Routes} />
           </Switch>
           <MainViewFooter />
         </Fragment>
