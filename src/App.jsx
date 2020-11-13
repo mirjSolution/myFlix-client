@@ -1,8 +1,7 @@
-import React, { Fragment, useeffect } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainViewNavbar from './components/main-view/main-view-navbar';
 import MainViewFooter from './components/main-view/main-view-footer';
-import MovieList from './components/movies-list/movies-list';
 import Routes from './components/routing/routes';
 
 // Redux
@@ -16,7 +15,6 @@ const App = () => {
         <Fragment>
           <MainViewNavbar />
           <Switch>
-            <Route exact path='/' component={MovieList} />
             <Route component={Routes} />
           </Switch>
           <MainViewFooter />

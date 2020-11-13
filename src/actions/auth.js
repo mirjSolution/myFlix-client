@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { USER_LOADED, AUTH_ERROR } from './types';
+import { SET_USER } from './types';
 
 // Login User
 // export const

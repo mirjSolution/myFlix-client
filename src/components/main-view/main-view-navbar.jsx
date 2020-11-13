@@ -7,7 +7,9 @@ import { setFilter } from '../../actions/visibilityFilter';
 import logo from '../../../public/images/logo.svg';
 import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-input';
 
-const MainViewNavbar = ({ setFilter }) => {
+import './main-view.scss';
+
+const MainViewNavbar = ({ setFilter, isAuthenticated }) => {
   const [formSearch, setFormSearch] = useState({
     searchField: '',
   });
@@ -26,8 +28,10 @@ const MainViewNavbar = ({ setFilter }) => {
     setFilter(searchField);
   }, [setFilter, searchField]);
 
+  console.log(isAuthenticated);
+
   return (
-    <section className='main-view-navbar'>
+    <section className={`main-view-navbar-${isAuthenticated}`}>
       <header>
         <Navbar
           collapseOnSelect
@@ -35,6 +39,7 @@ const MainViewNavbar = ({ setFilter }) => {
           bg='dark'
           variant='dark'
           fixed='top'
+          disabled
         >
           <Navbar.Brand>
             <Link to='/'>
@@ -65,6 +70,11 @@ const MainViewNavbar = ({ setFilter }) => {
 
 MainViewNavbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setFilter })(MainViewNavbar);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setFilter })(MainViewNavbar);
