@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -63,8 +63,12 @@ const MainViewNavbar = ({ setFilter, token, logout, username }) => {
           <Navbar.Collapse id='responsive-navbar-nav'>
             <i className='far fa-user-circle'> {username}</i>
             <Nav className='mr-auto'>
-              <Nav.Link>PROFILE</Nav.Link>
-              <Nav.Link onClick={handleLogout}>LOGOUT</Nav.Link>
+              <Link className='profile-link' to='/profile'>
+                PROFILE
+              </Link>
+              <a className='profile-link' onClick={handleLogout}>
+                LOGOUT
+              </a>
             </Nav>
             <VisibilityFilterInput
               placeholder='Filter Movies'

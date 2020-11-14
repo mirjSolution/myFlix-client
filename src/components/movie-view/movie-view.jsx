@@ -29,7 +29,7 @@ const MovieView = ({
   return (
     <React.Fragment>
       <div className='movie-view text-center'>
-        <Card style={{ width: '20rem' }}>
+        <Card>
           <Card.Img variant='top' src={imagePath} />
 
           <Card.Body>

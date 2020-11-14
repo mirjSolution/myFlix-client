@@ -1,8 +1,30 @@
 .movie-view {
-  margin: 100px 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  .card {
+    display: flex;
+    flex-direction: row;
+    .card-img-top {
+      height: 370px;
+      width: 230px;
+    }
+  }
+}
+
+@media all and (max-width: 750px) {
+  .movie-view {
+    margin: 100px 0;
+    .card {
+      width: 20rem;
+      display: flex;
+      flex-direction: column;
+      .card-img-top {
+        height: 370px;
+        width: 320px;
+      }
+    }
+  }
 }

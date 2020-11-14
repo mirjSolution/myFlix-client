@@ -32,7 +32,7 @@ const RegistrationView = ({ register, setAlert, isAuthenticated }) => {
     <React.Fragment>
       <Form className='form-register'>
         <h1 className='text-danger text-center mt-5'>Welcome to myFlix!</h1>
-        <p className='mb-5'>Please register to continue.</p>
+        <p>Please register to continue.</p>
         <AlertView />
         <Form.Group controlId='formBasicText'>
           <Form.Label>Username</Form.Label>
