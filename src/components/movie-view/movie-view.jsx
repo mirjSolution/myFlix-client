@@ -58,7 +58,7 @@ const MovieView = ({
 MovieView.propTypes = {
   getMovie: PropTypes.func.isRequired,
   selectedMovie: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

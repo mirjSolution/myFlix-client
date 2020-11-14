@@ -10,7 +10,7 @@ import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-i
 
 import './main-view.scss';
 
-const MainViewNavbar = ({ setFilter, token, logout }) => {
+const MainViewNavbar = ({ setFilter, token, logout, username }) => {
   let isDisabled = true;
   const [formSearch, setFormSearch] = useState({
     searchField: '',
@@ -26,7 +26,7 @@ const MainViewNavbar = ({ setFilter, token, logout }) => {
 
   const handleLogout = () => {
     logout();
-    localStorage.clear('token');
+    localStorage.clear();
   };
 
   const { searchField } = formSearch;
@@ -61,6 +61,7 @@ const MainViewNavbar = ({ setFilter, token, logout }) => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
+            <i className='far fa-user-circle'> {username}</i>
             <Nav className='mr-auto'>
               <Nav.Link>PROFILE</Nav.Link>
               <Nav.Link onClick={handleLogout}>LOGOUT</Nav.Link>
@@ -80,11 +81,13 @@ const MainViewNavbar = ({ setFilter, token, logout }) => {
 MainViewNavbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.string,
+  username: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   token: state.auth.token,
+  username: state.auth.username,
 });
 
 export default connect(mapStateToProps, { setFilter, logout })(MainViewNavbar);

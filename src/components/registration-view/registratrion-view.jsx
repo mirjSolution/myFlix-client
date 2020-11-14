@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
 import './registration-view.scss';
+import { register } from '../../actions/auth.js';
+import AlertView from '../alert-view/alert-view';
+import { setAlert } from '../../actions/alert';
 
-const RegistrationView = () => {
+const RegistrationView = ({ register, setAlert, isAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,13 +17,23 @@ const RegistrationView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setAlert('Password and Confirm Password does not match!', 'info');
+      return;
+    }
+    register(username, email, password, birthday);
   };
+
+  if (isAuthenticated) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <React.Fragment>
       <Form className='form-register'>
         <h1 className='text-danger text-center mt-5'>Welcome to myFlix!</h1>
         <p className='mb-5'>Please register to continue.</p>
+        <AlertView />
         <Form.Group controlId='formBasicText'>
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -67,8 +81,8 @@ const RegistrationView = () => {
         </Form.Group>
         <div className='action-button'>
           <Button
-            className='mr-2'
             onClick={handleSubmit}
+            className='mr-2'
             variant='primary'
             type='submit'
           >
@@ -85,4 +99,16 @@ const RegistrationView = () => {
   );
 };
 
-export default RegistrationView;
+RegistrationView.propTypes = {
+  register: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { register, setAlert })(
+  RegistrationView
+);

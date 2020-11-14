@@ -65,7 +65,7 @@ GenreView.propTypes = {
   getMovieGenre: PropTypes.func.isRequired,
   selectedGenre: PropTypes.object.isRequired,
   genreList: PropTypes.array.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

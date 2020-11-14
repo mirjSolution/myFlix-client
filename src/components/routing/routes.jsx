@@ -31,7 +31,7 @@ const Routes = ({ token }) => {
 };
 
 Routes.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

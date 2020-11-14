@@ -69,7 +69,7 @@ const MovieList = ({
 MovieList.propTypes = {
   getMovies: PropTypes.func.isRequired,
   movie: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

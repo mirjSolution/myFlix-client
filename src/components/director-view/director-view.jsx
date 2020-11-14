@@ -66,7 +66,7 @@ DirectorView.propTypes = {
   getMovieDirector: PropTypes.func.isRequired,
   selectedDirector: PropTypes.object.isRequired,
   directorList: PropTypes.array.isRequired,
-  token: PropTypes.string.isRequired,
+  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

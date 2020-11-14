@@ -3,12 +3,9 @@ import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   LOGOUT,
-  CLEAR_PROFILE,
 } from './types';
 
 // Login User
@@ -26,6 +23,7 @@ export const login = (username, password) => {
         });
         dispatch(setAlert('Successfully Login', 'success'));
         localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.user.username);
       })
       .catch((err) => {
         let errors = [];
@@ -35,6 +33,43 @@ export const login = (username, password) => {
         }
         dispatch({
           type: AUTH_ERROR,
+        });
+      });
+  };
+};
+
+// Register
+export const register = (username, email, password, birthday) => {
+  return (dispatch) => {
+    axios
+      .post('http://localhost:8080/users', {
+        username: username,
+        email: email,
+        password: password,
+        birthday: birthday,
+      })
+      .then((res) => {
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: res.data,
+        });
+        dispatch(
+          setAlert('User succefully registered, Welcome to MyFlix!', 'success')
+        );
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.user.username);
+      })
+      .catch((err) => {
+        if (err.response.status === 422) {
+          err.response.data.errors.map((error) => {
+            dispatch(setAlert(error.msg, 'info'));
+          });
+        } else {
+          dispatch(setAlert(err.response.data, 'danger'));
+        }
+
+        dispatch({
+          type: REGISTER_FAIL,
         });
       });
   };
