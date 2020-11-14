@@ -11,9 +11,10 @@ const MovieView = ({
   getMovie,
   selectedMovie: { imagePath, title, description, directorName, genreName },
   match,
+  token,
 }) => {
   useEffect(() => {
-    getMovie(match.params.title);
+    getMovie(match.params.title, token);
   }, [getMovie, match.params.title]);
   return (
     <React.Fragment>
@@ -57,10 +58,12 @@ const MovieView = ({
 MovieView.propTypes = {
   getMovie: PropTypes.func.isRequired,
   selectedMovie: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedMovie: state.movie.selectedMovie,
+  token: state.auth.token,
 });
 
 export default connect(mapStateToProps, { getMovie })(MovieView);

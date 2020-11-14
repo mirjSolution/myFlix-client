@@ -7,12 +7,17 @@ import MovieCard from '../movie-card/movie-card';
 
 import './movies-list.scss';
 
-const MovieList = ({ getMovies, movie: { movies }, visibilityFilter }) => {
+const MovieList = ({
+  getMovies,
+  movie: { movies },
+  visibilityFilter,
+  token,
+}) => {
   let filteredMovies = movies,
     imageWidth;
 
   useEffect(() => {
-    getMovies();
+    getMovies(token);
   }, [getMovies]);
 
   if (visibilityFilter !== '') {
@@ -22,7 +27,7 @@ const MovieList = ({ getMovies, movie: { movies }, visibilityFilter }) => {
   }
 
   if (filteredMovies.length === 1 || filteredMovies.length === 2) {
-    imageWidth = '250px';
+    imageWidth = '340px';
   }
 
   return (
@@ -63,11 +68,13 @@ const MovieList = ({ getMovies, movie: { movies }, visibilityFilter }) => {
 MovieList.propTypes = {
   getMovies: PropTypes.func.isRequired,
   movie: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   movie: state.movie,
   visibilityFilter: state.visibilityFilter.values,
+  token: state.auth.token,
 });
 
 export default connect(mapStateToProps, { getMovies })(MovieList);

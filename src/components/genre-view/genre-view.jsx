@@ -11,14 +11,15 @@ const GenreView = ({
   selectedGenre: { genreName, genreDescription },
   genreList,
   match,
+  token,
 }) => {
   let imageWidth;
   useEffect(() => {
-    getMovieGenre(match.params.genreName);
+    getMovieGenre(match.params.genreName, token);
   }, [getMovieGenre, match.params.genreName]);
 
   if (genreList.length === 1 || genreList.length === 2) {
-    imageWidth = '250px';
+    imageWidth = '340px';
   }
 
   return (
@@ -64,11 +65,13 @@ GenreView.propTypes = {
   getMovieGenre: PropTypes.func.isRequired,
   selectedGenre: PropTypes.object.isRequired,
   genreList: PropTypes.array.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedGenre: state.movie.selectedGenre,
   genreList: state.movie.genreList,
+  token: state.auth.token,
 });
 
 export default connect(mapStateToProps, { getMovieGenre })(GenreView);

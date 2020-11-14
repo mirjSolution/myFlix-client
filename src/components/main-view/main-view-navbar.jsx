@@ -4,12 +4,14 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setFilter } from '../../actions/visibilityFilter';
+import { logout } from '../../actions/auth';
 import logo from '../../../public/images/logo.svg';
 import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-input';
 
 import './main-view.scss';
 
-const MainViewNavbar = ({ setFilter, isAuthenticated }) => {
+const MainViewNavbar = ({ setFilter, token, logout }) => {
+  let isDisabled = true;
   const [formSearch, setFormSearch] = useState({
     searchField: '',
   });
@@ -22,16 +24,23 @@ const MainViewNavbar = ({ setFilter, isAuthenticated }) => {
     setFormSearch({ searchField: '' });
   };
 
+  const handleLogout = () => {
+    logout();
+    localStorage.clear('token');
+  };
+
   const { searchField } = formSearch;
 
   useEffect(() => {
     setFilter(searchField);
   }, [setFilter, searchField]);
 
-  console.log(isAuthenticated);
+  if (token) {
+    isDisabled = false;
+  }
 
   return (
-    <section className={`main-view-navbar-${isAuthenticated}`}>
+    <section className={`main-view-navbar-${isDisabled}`}>
       <header>
         <Navbar
           collapseOnSelect
@@ -53,8 +62,8 @@ const MainViewNavbar = ({ setFilter, isAuthenticated }) => {
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='mr-auto'>
-              <Nav.Link href='#home'>Home</Nav.Link>
-              <Nav.Link href='#features'>Features</Nav.Link>
+              <Nav.Link>PROFILE</Nav.Link>
+              <Nav.Link onClick={handleLogout}>LOGOUT</Nav.Link>
             </Nav>
             <VisibilityFilterInput
               placeholder='Filter Movies'
@@ -70,11 +79,12 @@ const MainViewNavbar = ({ setFilter, isAuthenticated }) => {
 
 MainViewNavbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  token: state.auth.token,
 });
 
-export default connect(mapStateToProps, { setFilter })(MainViewNavbar);
+export default connect(mapStateToProps, { setFilter, logout })(MainViewNavbar);

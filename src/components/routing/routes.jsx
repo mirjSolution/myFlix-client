@@ -8,12 +8,11 @@ import MovieView from '../movie-view/movie-view';
 import GenreView from '../genre-view/genre-view';
 import DirectorView from '../director-view/director-view';
 import LoginView from '../login-view/login-view';
-import NotFound from '../not-found-view/not-found-view';
 
-const Routes = ({ isAuthenticated }) => {
+const Routes = ({ token }) => {
   return (
     <section className='container'>
-      {!isAuthenticated ? <Redirect to='/login' /> : ''}
+      {!token ? <Redirect to='/login' /> : <Redirect to='/' />}
       <Switch>
         <Route exact path='/' component={MovieList} />
         <Route exact path='/login' component={LoginView} />
@@ -24,7 +23,6 @@ const Routes = ({ isAuthenticated }) => {
           path='/movies/director/:directorName'
           component={DirectorView}
         />
-        <Route component={NotFound} />
       </Switch>
     </section>
   );
@@ -35,7 +33,7 @@ Routes.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  token: state.auth.token,
 });
 
 export default connect(mapStateToProps)(Routes);
