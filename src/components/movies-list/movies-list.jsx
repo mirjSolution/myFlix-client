@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMovies } from '../../actions/movie.js';
 import MovieCard from '../movie-card/movie-card';
-
+import AlertView from '../alert-view/alert-view';
 import './movies-list.scss';
 
 const MovieList = ({
@@ -33,6 +33,7 @@ const MovieList = ({
   return (
     <section className='movie-description text-center'>
       <div className='movie-list'>
+        <AlertView />
         <Container>
           <Row>
             {filteredMovies.map((movie) => {

@@ -24,6 +24,7 @@ export const login = (username, password) => {
           type: LOGIN_SUCCESS,
           payload: res.data,
         });
+        dispatch(setAlert('Successfully Login', 'success'));
         localStorage.setItem('token', res.data.token);
       })
       .catch((err) => {

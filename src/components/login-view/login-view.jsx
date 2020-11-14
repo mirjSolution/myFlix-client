@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AlertView from '../alert-view/alert-view';
 import { connect } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
@@ -15,6 +15,8 @@ const LoginView = ({ login }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     login(username, password);
+    setUsername('');
+    setPassword('');
   };
 
   return (
@@ -45,7 +47,7 @@ const LoginView = ({ login }) => {
         </Form.Group>
         <p>
           Dont have an account?
-          <Button variant='link'>Register</Button>
+          <Link to='/register'> Register</Link>
         </p>
         <Button onClick={handleSubmit} variant='primary' type='submit'>
           Submit

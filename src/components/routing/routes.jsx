@@ -8,6 +8,7 @@ import MovieView from '../movie-view/movie-view';
 import GenreView from '../genre-view/genre-view';
 import DirectorView from '../director-view/director-view';
 import LoginView from '../login-view/login-view';
+import RegistrationView from '../registration-view/registratrion-view';
 
 const Routes = ({ token }) => {
   return (
@@ -16,6 +17,7 @@ const Routes = ({ token }) => {
       <Switch>
         <Route exact path='/' component={MovieList} />
         <Route exact path='/login' component={LoginView} />
+        <Route exact path='/register' component={RegistrationView} />
         <Route exact path='/movies/:title' component={MovieView} />
         <Route exact path='/movies/genre/:genreName' component={GenreView} />
         <Route

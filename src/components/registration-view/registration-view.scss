@@ -1,13 +1,10 @@
 .form-register {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  #formBasicBirthday {
+  input {
     width: 250px;
-  }
-  .action-button {
-    display: flex;
-    flex-direction: row;
   }
 }
