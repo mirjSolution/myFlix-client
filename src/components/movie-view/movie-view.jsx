@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getMovie } from '../../actions/movie';
-
+import { addToFavorites } from '../../actions/profile';
+import AlertView from '../alert-view/alert-view';
 import './movie-view.scss';
 
 const MovieView = ({
@@ -12,15 +13,25 @@ const MovieView = ({
   selectedMovie: { imagePath, title, description, directorName, genreName },
   match,
   token,
+  addToFavorites,
 }) => {
   useEffect(() => {
     getMovie(match.params.title, token);
   }, [getMovie, match.params.title]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const username = localStorage.getItem('username');
+    const title = match.params.title;
+    addToFavorites(username, title);
+  };
+
   return (
     <React.Fragment>
       <div className='movie-view text-center'>
         <Card style={{ width: '20rem' }}>
           <Card.Img variant='top' src={imagePath} />
+
           <Card.Body>
             <Card.Title>{title}</Card.Title>
             <Card.Text>
@@ -45,6 +56,7 @@ const MovieView = ({
             <Link to={`/movies/genre/${genreName}`}>
               <Button className='m-1'>Genre</Button>
             </Link>
+            <AlertView />
             <Button className='m-1' onClick={(e) => handleSubmit(e)}>
               Add to favorite
             </Button>
@@ -57,6 +69,7 @@ const MovieView = ({
 
 MovieView.propTypes = {
   getMovie: PropTypes.func.isRequired,
+  addToFavorites: PropTypes.func.isRequired,
   selectedMovie: PropTypes.object.isRequired,
   token: PropTypes.string,
 };
@@ -66,4 +79,6 @@ const mapStateToProps = (state) => ({
   token: state.auth.token,
 });
 
-export default connect(mapStateToProps, { getMovie })(MovieView);
+export default connect(mapStateToProps, { getMovie, addToFavorites })(
+  MovieView
+);

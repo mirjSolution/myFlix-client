@@ -17,13 +17,13 @@ export const login = (username, password) => {
         password: password,
       })
       .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.user.username);
         dispatch({
           type: LOGIN_SUCCESS,
           payload: res.data,
         });
         dispatch(setAlert('Successfully Login', 'success'));
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', res.data.user.username);
       })
       .catch((err) => {
         let errors = [];
@@ -49,6 +49,8 @@ export const register = (username, email, password, birthday) => {
         birthday: birthday,
       })
       .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('username', res.data.user.username);
         dispatch({
           type: REGISTER_SUCCESS,
           payload: res.data,
@@ -56,8 +58,6 @@ export const register = (username, email, password, birthday) => {
         dispatch(
           setAlert('User succefully registered, Welcome to MyFlix!', 'success')
         );
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', res.data.user.username);
       })
       .catch((err) => {
         if (err.response.status === 422) {
