@@ -11,12 +11,12 @@
         cursor: pointer;
       }
       .movie-list-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        margin: 0 20px;
         color: black;
+        .favourite-list {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
         .fa-trash-alt {
           color: red;
         }

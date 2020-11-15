@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import { getCurrentProfile } from '../../actions/profile';
-import { Form, Button, Accordion, Card } from 'react-bootstrap';
+import { Form, Button, Accordion, Card, ListGroup } from 'react-bootstrap';
 import './profile-view.scss';
 
-const ProfileView = () => {
-  const [usernameProfile, setUsername] = useState('');
-  const [emailProfile, setEmail] = useState('');
-  const [passwordProfile, setPassword] = useState('');
-  const [confirmPasswordProfile, setConfirmPassword] = useState('');
-  const [birthdayProfile, setBirthday] = useState('');
-  const [favoriteMoviesUpdate, setFavoriteMoviesUpdate] = useState([]);
+const ProfileView = ({
+  profile: { username, email, birthday, favoriteMovies },
+}) => {
+  let convertDate = new Date(birthday).toISOString().slice(0, 10);
+  const [usernameProfile, setUsername] = useState(username);
+  const [emailProfile, setEmail] = useState(email);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [birthdayProfile, setBirthday] = useState(birthday);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,8 +28,6 @@ const ProfileView = () => {
 
   const handleRemoveMovie = (movie) => {};
 
-  let convertDate = moment(birthdayProfile).format('YYYY-MM-DD');
-  console.log(convertDate);
   return (
     <React.Fragment>
       <div className='profile-view'>
@@ -43,20 +41,30 @@ const ProfileView = () => {
               <i className='fas fa-plus'></i> List of Favourite Movies
             </Accordion.Toggle>
             <Accordion.Collapse eventKey='1'>
-              <div className='movie-list-container'>
-                <div>Hello</div>
-                <div>
-                  <i className='fas fa-trash-alt'></i>
-                </div>
+              <div>
+                {favoriteMovies.map((movie, idx) => {
+                  return (
+                    <div key={idx} className='movie-list-container'>
+                      <ListGroup>
+                        <ListGroup.Item className='favourite-list'>
+                          <div>{movie}</div>
+                          <div>
+                            <i className='fas fa-trash-alt'></i>
+                          </div>
+                        </ListGroup.Item>
+                      </ListGroup>
+                    </div>
+                  );
+                })}
               </div>
             </Accordion.Collapse>
           </Accordion>
-
           <Form>
             <Form.Group controlId='formBasicText'>
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type='text'
+                value={usernameProfile}
                 onChange={(e) => setUsername(e.target.value)}
               />
             </Form.Group>
@@ -64,6 +72,7 @@ const ProfileView = () => {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type='email'
+                value={emailProfile}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Form.Group>
@@ -87,6 +96,7 @@ const ProfileView = () => {
               <Form.Label>Birthday</Form.Label>
               <Form.Control
                 type='date'
+                value={convertDate}
                 onChange={(e) => setBirthday(e.target.value)}
               />
             </Form.Group>
@@ -117,11 +127,11 @@ const ProfileView = () => {
 };
 
 ProfileView.propTypes = {
-  profiles: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  profiles: state.profile.profiles,
+  profile: state.auth.userInfo.user,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(ProfileView);
+export default connect(mapStateToProps)(ProfileView);
