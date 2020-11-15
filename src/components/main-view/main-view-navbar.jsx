@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -10,29 +10,27 @@ import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-i
 
 import './main-view.scss';
 
-const MainViewNavbar = ({ setFilter, token, logout, username }) => {
+const MainViewNavbar = ({ setFilter, token, username, logout }) => {
   let isDisabled = true;
   const [formSearch, setFormSearch] = useState({
     searchField: '',
   });
-
   const handleChange = (event) => {
     setFormSearch({ searchField: event.target.value });
   };
-
   const handleClick = () => {
     setFormSearch({ searchField: '' });
   };
-
   const handleLogout = () => {
     logout();
     localStorage.clear();
   };
-
   const { searchField } = formSearch;
 
   useEffect(() => {
-    setFilter(searchField);
+    if (searchField !== '') {
+      setFilter(searchField);
+    }
   }, [setFilter, searchField]);
 
   if (token) {
@@ -85,13 +83,12 @@ const MainViewNavbar = ({ setFilter, token, logout, username }) => {
 MainViewNavbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
-  token: PropTypes.string,
-  username: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  token: state.auth.token,
-  username: state.auth.username,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  username:
+    state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
 export default connect(mapStateToProps, { setFilter, logout })(MainViewNavbar);

@@ -16,7 +16,9 @@ const DirectorView = ({
 }) => {
   let imageWidth;
   useEffect(() => {
-    getMovieDirector(match.params.directorName, token);
+    if (token !== '') {
+      getMovieDirector(match.params.directorName, token);
+    }
   }, [getMovieDirector, match.params.directorName]);
 
   if (directorList.length === 1 || directorList.length === 2) {
@@ -66,13 +68,12 @@ DirectorView.propTypes = {
   getMovieDirector: PropTypes.func.isRequired,
   selectedDirector: PropTypes.object.isRequired,
   directorList: PropTypes.array.isRequired,
-  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   selectedDirector: state.movie.selectedDirector,
   directorList: state.movie.directorList,
-  token: state.auth.token,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
 });
 
 export default connect(mapStateToProps, { getMovieDirector })(DirectorView);

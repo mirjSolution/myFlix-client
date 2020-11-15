@@ -23,17 +23,3 @@ export const addToFavorites = (username, title) => {
       });
   };
 };
-
-// Get Single Movie
-export const getCurrentProfile = (username, token) => {
-  return (dispatch) => {
-    axios
-      .get(`http://localhost:8080/users/${username}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        dispatch({ type: GET_PROFILE, payload: res.data });
-      })
-      .catch((err) => console.log(err));
-  };
-};

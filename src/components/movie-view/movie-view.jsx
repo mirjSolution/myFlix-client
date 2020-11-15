@@ -14,16 +14,17 @@ const MovieView = ({
   match,
   token,
   addToFavorites,
+  username,
 }) => {
   useEffect(() => {
-    getMovie(match.params.title, token);
+    if (token !== '') {
+      getMovie(match.params.title, token);
+    }
   }, [getMovie, match.params.title]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const username = localStorage.getItem('username');
-    const title = match.params.title;
-    addToFavorites(username, title);
+    addToFavorites(username, match.params.title);
   };
 
   return (
@@ -71,12 +72,13 @@ MovieView.propTypes = {
   getMovie: PropTypes.func.isRequired,
   addToFavorites: PropTypes.func.isRequired,
   selectedMovie: PropTypes.object.isRequired,
-  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   selectedMovie: state.movie.selectedMovie,
-  token: state.auth.token,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  username:
+    state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
 export default connect(mapStateToProps, { getMovie, addToFavorites })(

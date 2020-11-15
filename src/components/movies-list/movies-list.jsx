@@ -17,7 +17,9 @@ const MovieList = ({
     imageWidth;
 
   useEffect(() => {
-    getMovies(token);
+    if (token !== '') {
+      getMovies(token);
+    }
   }, [getMovies]);
 
   if (visibilityFilter !== '') {
@@ -69,13 +71,12 @@ const MovieList = ({
 MovieList.propTypes = {
   getMovies: PropTypes.func.isRequired,
   movie: PropTypes.object.isRequired,
-  token: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   movie: state.movie,
   visibilityFilter: state.visibilityFilter.values,
-  token: state.auth.token,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
 });
 
 export default connect(mapStateToProps, { getMovies })(MovieList);

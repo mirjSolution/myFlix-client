@@ -11,10 +11,10 @@ import LoginView from '../login-view/login-view';
 import ProfileView from '../profile-view/profile-view';
 import RegistrationView from '../registration-view/registratrion-view';
 
-const Routes = ({ token }) => {
+const Routes = ({ auth }) => {
   return (
     <section className='container'>
-      {!token ? <Redirect to='/login' /> : <Redirect to='/' />}
+      {!auth ? <Redirect to='/login' /> : <Redirect to='/' />}
       <Switch>
         <Route exact path='/' component={MovieList} />
         <Route exact path='/login' component={LoginView} />
@@ -32,12 +32,8 @@ const Routes = ({ token }) => {
   );
 };
 
-Routes.propTypes = {
-  token: PropTypes.string,
-};
-
 const mapStateToProps = (state) => ({
-  token: state.auth.token,
+  auth: state.auth.userInfo,
 });
 
 export default connect(mapStateToProps)(Routes);

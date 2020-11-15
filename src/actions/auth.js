@@ -17,8 +17,7 @@ export const login = (username, password) => {
         password: password,
       })
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', res.data.user.username);
+        localStorage.setItem('userInfo', JSON.stringify(res.data));
         dispatch({
           type: LOGIN_SUCCESS,
           payload: res.data,
@@ -49,8 +48,7 @@ export const register = (username, email, password, birthday) => {
         birthday: birthday,
       })
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', res.data.user.username);
+        localStorage.setItem('userInfo', JSON.stringify(res.data));
         dispatch({
           type: REGISTER_SUCCESS,
           payload: res.data,

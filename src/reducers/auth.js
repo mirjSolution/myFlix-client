@@ -6,45 +6,19 @@ import {
   ACCOUNT_DELETED,
 } from '../actions/types';
 
-const initialState = {
-  username: localStorage.getItem('username'),
-  token: localStorage.getItem('token'),
-  isAuthenticated: null,
-};
-
-export default function (state = initialState, action) {
+export default function (state = {}, action) {
   const { type, payload } = action;
 
   switch (type) {
     case REGISTER_SUCCESS:
-      return {
-        ...state,
-        ...payload,
-        isAuthenticated: true,
-        username: localStorage.getItem('username'),
-      };
     case LOGIN_SUCCESS:
       return {
-        ...state,
-        ...payload,
-        isAuthenticated: true,
-        username: localStorage.getItem('username'),
+        userInfo: payload,
       };
     case ACCOUNT_DELETED:
-      return {
-        ...state,
-        token: null,
-        isAuthenticated: false,
-        username: null,
-      };
     case AUTH_ERROR:
     case LOGOUT:
-      return {
-        ...state,
-        token: null,
-        isAuthenticated: false,
-        username: null,
-      };
+      return { userInfo: null };
     default:
       return state;
   }
