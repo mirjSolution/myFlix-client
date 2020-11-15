@@ -28,9 +28,7 @@ const MainViewNavbar = ({ setFilter, token, username, logout }) => {
   const { searchField } = formSearch;
 
   useEffect(() => {
-    if (searchField !== '') {
-      setFilter(searchField);
-    }
+    setFilter(searchField);
   }, [setFilter, searchField]);
 
   if (token) {
