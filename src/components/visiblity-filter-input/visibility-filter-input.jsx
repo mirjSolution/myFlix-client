@@ -9,9 +9,10 @@ const visibilityFilterInput = ({
   handleChange,
   handleClick,
   filteredMovies,
+  toggleSearch,
 }) => {
   return (
-    <Form inline>
+    <Form className={`form-filter-${toggleSearch}`} inline>
       <Form.Control
         type='text'
         placeholder={placeholder}
@@ -29,10 +30,12 @@ visibilityFilterInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  toggleSearch: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filteredMovies: state.visibilityFilter.values,
+  toggleSearch: state.toggle.search,
 });
 
 export default connect(mapStateToProps)(visibilityFilterInput);

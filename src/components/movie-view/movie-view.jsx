@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { getMovie } from '../../actions/movie';
 import { addToFavorites } from '../../actions/profile';
 import AlertView from '../alert-view/alert-view';
+import { TOGGLE_FILTER } from '../../actions/types';
 import './movie-view.scss';
 
 const MovieView = ({
@@ -15,6 +16,7 @@ const MovieView = ({
   token,
   addToFavorites,
   username,
+  history,
 }) => {
   useEffect(() => {
     if (token !== '') {
@@ -25,6 +27,10 @@ const MovieView = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     addToFavorites(username, match.params.title);
+  };
+
+  const handleBack = () => {
+    history.push('/');
   };
 
   return (
@@ -47,9 +53,9 @@ const MovieView = ({
               <span className='label text-danger'>Director: </span>
               <span className='value'>{directorName}</span>
             </Card.Text>
-            <Link to={`/`}>
-              <Button className='m-1'>Back</Button>
-            </Link>
+            <Button onClick={handleBack} className='m-1'>
+              Back
+            </Button>
             <Link to={`/movies/director/${directorName}`}>
               <Button className='m-1'>Director</Button>
             </Link>
@@ -81,6 +87,12 @@ const mapStateToProps = (state) => ({
     state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
-export default connect(mapStateToProps, { getMovie, addToFavorites })(
-  MovieView
-);
+const mapDispatchToProps = (dispatch) => {
+  dispatch({ type: TOGGLE_FILTER, payload: false });
+};
+
+export default connect(mapStateToProps, {
+  getMovie,
+  addToFavorites,
+  mapDispatchToProps,
+})(MovieView);

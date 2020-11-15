@@ -1,17 +1,15 @@
-import { SET_FILTER } from '../actions/types';
+import { TOGGLE_FILTER } from '../actions/types';
 
 const initialState = {
-  values: '',
+  search: true,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SET_FILTER:
+    case TOGGLE_FILTER:
       return {
-        ...state,
-        values: action.payload,
+        search: action.payload,
       };
-
     default:
       return state;
   }

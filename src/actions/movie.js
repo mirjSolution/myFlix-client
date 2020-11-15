@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { GET_MOVIES, GET_MOVIE, GET_GENRE, GET_DIRECTOR } from './types.js';
+import {
+  GET_MOVIES,
+  GET_MOVIE,
+  GET_GENRE,
+  GET_DIRECTOR,
+  TOGGLE_FILTER,
+} from './types.js';
 
 // Get Movies
 export const getMovies = (token) => {
@@ -10,6 +16,7 @@ export const getMovies = (token) => {
       })
       .then((res) => {
         dispatch({ type: GET_MOVIES, payload: res.data });
+        dispatch({ type: TOGGLE_FILTER, payload: true });
       })
       .catch((err) => console.log(err));
   };
@@ -24,6 +31,7 @@ export const getMovie = (title, token) => {
       })
       .then((res) => {
         dispatch({ type: GET_MOVIE, payload: res.data });
+        dispatch({ type: TOGGLE_FILTER, payload: false });
       })
       .catch((err) => console.log(err));
   };
@@ -38,6 +46,7 @@ export const getMovieGenre = (genreName, token) => {
       })
       .then((res) => {
         dispatch({ type: GET_GENRE, payload: res.data });
+        dispatch({ type: TOGGLE_FILTER, payload: false });
       })
       .catch((err) => console.log(err));
   };
@@ -52,6 +61,7 @@ export const getMovieDirector = (directorName, token) => {
       })
       .then((res) => {
         dispatch({ type: GET_DIRECTOR, payload: res.data });
+        dispatch({ type: TOGGLE_FILTER, payload: false });
       })
       .catch((err) => console.log(err));
   };

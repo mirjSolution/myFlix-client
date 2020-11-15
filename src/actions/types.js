@@ -4,6 +4,7 @@ export const GET_GENRE = 'GET_GENRE';
 export const GET_DIRECTOR = 'GET_DIRECTOR';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_ALERT = 'SET_ALERT';
+export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
