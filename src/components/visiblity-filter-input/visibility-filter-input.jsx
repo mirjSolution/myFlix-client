@@ -30,7 +30,7 @@ visibilityFilterInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
-  toggleSearch: PropTypes.bool.isRequired,
+  toggleSearch: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Form, Button, Accordion, Card, ListGroup } from 'react-bootstrap';
 import './profile-view.scss';
 
 const ProfileView = ({
   profile: { username, email, birthday, favoriteMovies },
+  history,
 }) => {
   let convertDate = new Date(birthday).toISOString().slice(0, 10);
   const [usernameProfile, setUsername] = useState(username);
@@ -15,10 +17,6 @@ const ProfileView = ({
   const [birthdayProfile, setBirthday] = useState(birthday);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const handleCancel = (e) => {
     e.preventDefault();
   };
 
@@ -116,7 +114,11 @@ const ProfileView = ({
             >
               Unregister
             </Button>
-            <Button onClick={handleCancel} variant='primary' type='submit'>
+            <Button
+              onClick={() => history.push('/')}
+              variant='primary'
+              type='submit'
+            >
               Cancel
             </Button>
           </Form>
@@ -134,4 +136,4 @@ const mapStateToProps = (state) => ({
   profile: state.auth.userInfo.user,
 });
 
-export default connect(mapStateToProps)(ProfileView);
+export default withRouter(connect(mapStateToProps)(ProfileView));

@@ -1,31 +1,48 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setFilter } from '../../actions/visibilityFilter';
+import { TOGGLE_FILTER } from '../../actions/types';
 import { logout } from '../../actions/auth';
 import logo from '../../../public/images/logo.svg';
 import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-input';
 
 import './main-view.scss';
 
-const MainViewNavbar = ({ setFilter, token, username, logout }) => {
+const MainViewNavbar = ({ setFilter, token, username, logout, history }) => {
   let isDisabled = true;
+
+  const dispatch = useDispatch();
+
   const [formSearch, setFormSearch] = useState({
     searchField: '',
   });
+
+  const { searchField } = formSearch;
+
   const handleChange = (event) => {
     setFormSearch({ searchField: event.target.value });
   };
+
   const handleClick = () => {
     setFormSearch({ searchField: '' });
   };
+
+  const handleProfile = () => {
+    dispatch({
+      type: TOGGLE_FILTER,
+      payload: false,
+    });
+    history.push('/profile');
+  };
+
   const handleLogout = () => {
+    history.push('/');
     logout();
     localStorage.clear();
   };
-  const { searchField } = formSearch;
 
   useEffect(() => {
     setFilter(searchField);
@@ -59,9 +76,9 @@ const MainViewNavbar = ({ setFilter, token, username, logout }) => {
           <Navbar.Collapse id='responsive-navbar-nav'>
             <i className='far fa-user-circle'> {username}</i>
             <Nav className='mr-auto'>
-              <Link className='profile-link' to='/profile'>
+              <a className='profile-link' onClick={handleProfile}>
                 PROFILE
-              </Link>
+              </a>
               <a className='profile-link' onClick={handleLogout}>
                 LOGOUT
               </a>
@@ -89,4 +106,6 @@ const mapStateToProps = (state) => ({
     state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
-export default connect(mapStateToProps, { setFilter, logout })(MainViewNavbar);
+export default withRouter(
+  connect(mapStateToProps, { setFilter, logout })(MainViewNavbar)
+);
