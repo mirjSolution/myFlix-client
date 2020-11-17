@@ -1,10 +1,6 @@
 import { ADD_TO_FAVORITES, GET_PROFILE } from '../actions/types';
 
-const initialState = {
-  profiles: {},
-};
-
-export default function (state = initialState, action) {
+export default function (state = {}, action) {
   const { type, payload } = action;
 
   switch (type) {

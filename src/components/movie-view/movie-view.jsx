@@ -40,6 +40,7 @@ const MovieView = ({
           <Card.Img variant='top' src={imagePath} />
 
           <Card.Body>
+            <AlertView />
             <Card.Title>{title}</Card.Title>
             <Card.Text>
               <span className='label text-danger'>Description: </span>
@@ -63,7 +64,7 @@ const MovieView = ({
             <Link to={`/movies/genre/${genreName}`}>
               <Button className='m-1'>Genre</Button>
             </Link>
-            <AlertView />
+
             <Button className='m-1' onClick={(e) => handleSubmit(e)}>
               Add to favorite
             </Button>
