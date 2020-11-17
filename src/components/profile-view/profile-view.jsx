@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { setAlert } from '../../actions/alert.js';
+import { getProfile } from '../../actions/profile';
 import { Form, Button, Accordion, Card, ListGroup } from 'react-bootstrap';
 import './profile-view.scss';
 
 const ProfileView = ({
-  profile: { username, email, birthday, favoriteMovies },
+  profile: { content },
   history,
+  token,
+  user,
+  getProfile,
 }) => {
-  let convertDate = new Date(birthday).toISOString().slice(0, 10);
+  const { username, email, birthday, favoriteMovies } = content;
+
+  let convertDate = birthday.slice(0, 10);
+
   const [usernameProfile, setUsername] = useState(username);
   const [emailProfile, setEmail] = useState(email);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [birthdayProfile, setBirthday] = useState(birthday);
+  const [birthdayProfile, setBirthday] = useState(convertDate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setAlert('Password and Confirm Password does not match!', 'info');
+      return;
+    }
   };
 
   const handleUnregister = (e) => {
@@ -25,6 +37,10 @@ const ProfileView = ({
   };
 
   const handleRemoveMovie = (movie) => {};
+
+  useEffect(() => {
+    getProfile(user, token);
+  }, [getProfile, token, user]);
 
   return (
     <React.Fragment>
@@ -94,7 +110,7 @@ const ProfileView = ({
               <Form.Label>Birthday</Form.Label>
               <Form.Control
                 type='date'
-                value={convertDate}
+                value={birthdayProfile}
                 onChange={(e) => setBirthday(e.target.value)}
               />
             </Form.Group>
@@ -130,10 +146,16 @@ const ProfileView = ({
 
 ProfileView.propTypes = {
   profile: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  user: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  profile: state.auth.userInfo.user,
+  profile: state.profile,
+  user: state.auth.userInfo.user.username,
+  token: state.auth.userInfo.token,
 });
 
-export default withRouter(connect(mapStateToProps)(ProfileView));
+export default withRouter(
+  connect(mapStateToProps, { getProfile, setAlert })(ProfileView)
+);

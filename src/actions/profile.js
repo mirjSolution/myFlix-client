@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ADD_TO_FAVORITES, GET_PROFILE } from './types';
+import { ADD_TO_FAVORITES, GET_PROFILE, TOGGLE_FILTER } from './types';
 
 // Add to favorites
 export const addToFavorites = (username, title) => {
@@ -21,5 +21,20 @@ export const addToFavorites = (username, title) => {
           errors.forEach((error) => dispatch(setAlert(error, 'danger')));
         }
       });
+  };
+};
+
+// Get Single Movie
+export const getProfile = (username, token) => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:8080/users/${username}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        dispatch({ type: GET_PROFILE, payload: res.data });
+        dispatch({ type: TOGGLE_FILTER, payload: false });
+      })
+      .catch((err) => console.log(err));
   };
 };

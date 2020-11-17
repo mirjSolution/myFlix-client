@@ -1,6 +1,15 @@
 import { ADD_TO_FAVORITES, GET_PROFILE } from '../actions/types';
 
-export default function (state = {}, action) {
+const initialState = {
+  content: {
+    username: '',
+    email: '',
+    birthday: '',
+    favoriteMovies: [],
+  },
+};
+
+export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -12,7 +21,7 @@ export default function (state = {}, action) {
     case GET_PROFILE:
       return {
         ...state,
-        profiles: payload,
+        content: payload,
       };
     default:
       return state;
