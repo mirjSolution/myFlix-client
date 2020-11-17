@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert.js';
 import { getProfile, updateProfile } from '../../actions/profile';
@@ -29,7 +29,6 @@ const ProfileView = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       setAlert('Password and Confirm Password does not match!', 'info');
       return;
@@ -67,7 +66,9 @@ const ProfileView = ({
                     <div key={idx} className='movie-list-container'>
                       <ListGroup>
                         <ListGroup.Item className='favourite-list'>
-                          <div>{movie}</div>
+                          <div>
+                            <Link to={`/movies/${movie}`}>{movie}</Link>
+                          </div>
                           <div>
                             <i className='fas fa-trash-alt'></i>
                           </div>
@@ -80,7 +81,7 @@ const ProfileView = ({
             </Accordion.Collapse>
           </Accordion>
           <Form>
-            <Form.Group controlId='formBasicText'>
+            <Form.Group style={{ display: 'none' }} controlId='formBasicText'>
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type='text'

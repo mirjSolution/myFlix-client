@@ -5,6 +5,7 @@ import {
   GET_PROFILE,
   TOGGLE_FILTER,
   UPDATE_PROFILE,
+  PROFILE_ERROR,
 } from './types';
 
 // Add to favorites
@@ -45,23 +46,39 @@ export const getProfile = (username, token) => {
 };
 
 // Update Profile
-export const updateProfile = (username, email, password, birthday) => {
+export const updateProfile = (
+  usernameProfile,
+  emailProfile,
+  password,
+  birthdayProfile
+) => {
   return (dispatch) => {
     axios
-      .put(`http://localhost:8080/users/${username}`, {
-        username: username,
-        email: email,
+      .put(`http://localhost:8080/users/${usernameProfile}`, {
+        username: usernameProfile,
+        email: emailProfile,
         password: password,
-        birthday: birthday,
+        birthday: birthdayProfile,
       })
-      .then(() => {
+      .then((res) => {
         dispatch({
           type: UPDATE_PROFILE,
           payload: res.data,
         });
+        dispatch(setAlert('Profile Successfully Update', 'success'));
       })
-      .catch(() => {
-        console.log('Error updating user');
+      .catch((err) => {
+        let myObject = {};
+        myObject = err.response.data.errors;
+        for (let key in myObject) {
+          if (myObject.hasOwnProperty(key)) {
+            dispatch(setAlert(myObject[key].msg, 'info'));
+          }
+        }
+        dispatch({
+          type: PROFILE_ERROR,
+          payload: err.response.data.statusText,
+        });
       });
   };
 };
