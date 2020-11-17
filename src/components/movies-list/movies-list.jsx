@@ -75,6 +75,10 @@ MovieList.propTypes = {
 
 const mapStateToProps = (state) => ({
   movie: state.movie,
+  username:
+    state.profile.content.username === ''
+      ? state.auth.userInfo.user.username
+      : state.profile.content.username,
   visibilityFilter: state.visibilityFilter.values,
   token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
 });

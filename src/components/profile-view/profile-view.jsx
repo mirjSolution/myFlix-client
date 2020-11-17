@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert.js';
-import { getProfile } from '../../actions/profile';
+import { getProfile, updateProfile } from '../../actions/profile';
 import { Form, Button, Accordion, Card, ListGroup } from 'react-bootstrap';
+import AlertView from '../alert-view/alert-view';
 import './profile-view.scss';
 
 const ProfileView = ({
   profile: { content },
   history,
-  token,
-  user,
   getProfile,
+  updateProfile,
+  token,
+  setAlert,
+  user,
 }) => {
   const { username, email, birthday, favoriteMovies } = content;
 
@@ -26,10 +29,12 @@ const ProfileView = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setAlert('Password and Confirm Password does not match!', 'info');
       return;
     }
+    updateProfile(usernameProfile, emailProfile, password, birthdayProfile);
   };
 
   const handleUnregister = (e) => {
@@ -40,7 +45,7 @@ const ProfileView = ({
 
   useEffect(() => {
     getProfile(user, token);
-  }, [getProfile, token, user]);
+  }, [getProfile]);
 
   return (
     <React.Fragment>
@@ -50,6 +55,7 @@ const ProfileView = ({
           You can Update, Unregister and Remove your favourite movies from here
         </p>
         <div className='form-profile'>
+          <AlertView />
           <Accordion className='favourite-movies primary' defaultActiveKey='0'>
             <Accordion.Toggle as={Card.Header} eventKey='1'>
               <i className='fas fa-plus'></i> List of Favourite Movies
@@ -157,5 +163,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getProfile, setAlert })(ProfileView)
+  connect(mapStateToProps, { setAlert, getProfile, updateProfile })(ProfileView)
 );

@@ -1,4 +1,8 @@
-import { ADD_TO_FAVORITES, GET_PROFILE } from '../actions/types';
+import {
+  ADD_TO_FAVORITES,
+  GET_PROFILE,
+  UPDATE_PROFILE,
+} from '../actions/types';
 
 const initialState = {
   content: {
@@ -19,6 +23,7 @@ export default function (state = initialState, action) {
         favoriteMovies: payload,
       };
     case GET_PROFILE:
+    case UPDATE_PROFILE:
       return {
         ...state,
         content: payload,

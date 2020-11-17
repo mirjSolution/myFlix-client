@@ -25,7 +25,7 @@ const LoginView = ({ login }) => {
         <h1 className='text-danger text-center mt-5'>Welcome to myFlix!</h1>
         <p>Please login to continue.</p>
 
-        <Form.Group controlId='formBasicEmail'>
+        <Form.Group controlId='formBasicUsername'>
           <AlertView />
           <Form.Label>Username</Form.Label>
           <Form.Control

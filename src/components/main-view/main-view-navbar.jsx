@@ -4,13 +4,21 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setFilter } from '../../actions/visibilityFilter';
+import { getProfile } from '../../actions/profile';
 import { logout } from '../../actions/auth';
 import logo from '../../../public/images/logo.svg';
 import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-input';
 
 import './main-view.scss';
 
-const MainViewNavbar = ({ setFilter, token, username, logout, history }) => {
+const MainViewNavbar = ({
+  setFilter,
+  token,
+  username,
+  logout,
+  history,
+  getProfile,
+}) => {
   let isDisabled = true;
 
   const [formSearch, setFormSearch] = useState({
@@ -96,5 +104,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { setFilter, logout })(MainViewNavbar)
+  connect(mapStateToProps, { setFilter, logout, getProfile })(MainViewNavbar)
 );

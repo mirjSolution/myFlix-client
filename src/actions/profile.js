@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ADD_TO_FAVORITES, GET_PROFILE, TOGGLE_FILTER } from './types';
+import {
+  ADD_TO_FAVORITES,
+  GET_PROFILE,
+  TOGGLE_FILTER,
+  UPDATE_PROFILE,
+} from './types';
 
 // Add to favorites
 export const addToFavorites = (username, title) => {
@@ -36,5 +41,27 @@ export const getProfile = (username, token) => {
         dispatch({ type: TOGGLE_FILTER, payload: false });
       })
       .catch((err) => console.log(err));
+  };
+};
+
+// Update Profile
+export const updateProfile = (username, email, password, birthday) => {
+  return (dispatch) => {
+    axios
+      .put(`http://localhost:8080/users/${username}`, {
+        username: username,
+        email: email,
+        password: password,
+        birthday: birthday,
+      })
+      .then(() => {
+        dispatch({
+          type: UPDATE_PROFILE,
+          payload: res.data,
+        });
+      })
+      .catch(() => {
+        console.log('Error updating user');
+      });
   };
 };
