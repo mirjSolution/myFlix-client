@@ -4,8 +4,8 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setFilter } from '../../actions/visibilityFilter';
-import { getProfile } from '../../actions/profile';
 import { logout } from '../../actions/auth';
+import { toggleFilter } from '../../actions/toggle.js';
 import logo from '../../../public/images/logo.svg';
 import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-input';
 
@@ -17,9 +17,10 @@ const MainViewNavbar = ({
   username,
   logout,
   history,
-  getProfile,
+  toggleFilter,
 }) => {
-  let isDisabled = true;
+  let isDisabled,
+    isVisible = true;
 
   const [formSearch, setFormSearch] = useState({
     searchField: '',
@@ -27,23 +28,32 @@ const MainViewNavbar = ({
 
   const { searchField } = formSearch;
 
-  const handleChange = (event) => {
-    setFormSearch({ searchField: event.target.value });
+  useEffect(() => {
+    setFilter(searchField);
+  }, [setFilter, searchField]);
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setFormSearch({ searchField: e.target.value });
   };
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     setFormSearch({ searchField: '' });
   };
 
-  const handleLogout = () => {
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    toggleFilter(false);
+    history.push('/profile');
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
     history.push('/login');
     logout();
     localStorage.clear();
   };
-
-  useEffect(() => {
-    setFilter(searchField);
-  }, [setFilter, searchField]);
 
   if (token) {
     isDisabled = false;
@@ -73,9 +83,9 @@ const MainViewNavbar = ({
           <Navbar.Collapse id='responsive-navbar-nav'>
             <i className='far fa-user-circle'> {username}</i>
             <Nav className='mr-auto'>
-              <Link className='profile-link' to='/profile'>
+              <a className='profile-link' onClick={handleProfileClick}>
                 PROFILE
-              </Link>
+              </a>
               <a className='profile-link' onClick={handleLogout}>
                 LOGOUT
               </a>
@@ -84,6 +94,7 @@ const MainViewNavbar = ({
               placeholder='Filter Movies'
               handleChange={handleChange}
               handleClick={handleClick}
+              className={isVisible}
             />
           </Navbar.Collapse>
         </Navbar>
@@ -94,6 +105,7 @@ const MainViewNavbar = ({
 
 MainViewNavbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
+  toggleFilter: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
 };
 
@@ -104,5 +116,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { setFilter, logout, getProfile })(MainViewNavbar)
+  connect(mapStateToProps, { setFilter, logout, toggleFilter })(MainViewNavbar)
 );

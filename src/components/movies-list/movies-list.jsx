@@ -2,25 +2,29 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getMovies } from '../../actions/movie.js';
+import { getMovies } from '../../actions/movie';
+import { getProfile } from '../../actions/profile';
 import MovieCard from '../movie-card/movie-card';
 import AlertView from '../alert-view/alert-view';
 import './movies-list.scss';
 
 const MovieList = ({
   getMovies,
+  getProfile,
   movie: { movies },
   visibilityFilter,
   token,
+  username,
 }) => {
-  let filteredMovies = movies,
-    imageWidth;
-
   useEffect(() => {
     if (token !== '') {
       getMovies(token);
+      getProfile(username, token);
     }
   }, [getMovies]);
+
+  let filteredMovies = movies,
+    imageWidth;
 
   if (visibilityFilter !== '') {
     filteredMovies = movies.filter((m) =>
@@ -75,12 +79,9 @@ MovieList.propTypes = {
 
 const mapStateToProps = (state) => ({
   movie: state.movie,
-  username:
-    state.profile.content.username === ''
-      ? state.auth.userInfo.user.username
-      : state.profile.content.username,
+  username: state.auth.userInfo.user.username,
   visibilityFilter: state.visibilityFilter.values,
-  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  token: state.auth.userInfo.token,
 });
 
-export default connect(mapStateToProps, { getMovies })(MovieList);
+export default connect(mapStateToProps, { getMovies, getProfile })(MovieList);

@@ -39,7 +39,6 @@ export const getProfile = (username, token) => {
       })
       .then((res) => {
         dispatch({ type: GET_PROFILE, payload: res.data });
-        dispatch({ type: TOGGLE_FILTER, payload: false });
       })
       .catch((err) => console.log(err));
   };

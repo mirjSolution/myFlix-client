@@ -31,6 +31,7 @@ visibilityFilterInput.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
   toggleSearch: PropTypes.bool,
+  isVisible: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

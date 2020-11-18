@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert.js';
-import { getProfile, updateProfile } from '../../actions/profile';
+import { updateProfile, getProfile } from '../../actions/profile';
 import { Form, Button, Accordion, Card, ListGroup } from 'react-bootstrap';
 import AlertView from '../alert-view/alert-view';
 import './profile-view.scss';
@@ -11,40 +11,51 @@ import './profile-view.scss';
 const ProfileView = ({
   profile: { content },
   history,
-  getProfile,
   updateProfile,
-  token,
+  getProfile,
   setAlert,
+  token,
   user,
 }) => {
+  useEffect(() => {
+    getProfile(user, token);
+  }, [getProfile]);
+
   const { username, email, birthday, favoriteMovies } = content;
 
   let convertDate = birthday.slice(0, 10);
-
-  const [usernameProfile, setUsername] = useState(username);
   const [emailProfile, setEmail] = useState(email);
-  const [password, setPassword] = useState('');
+  const [passwordProfile, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [birthdayProfile, setBirthday] = useState(convertDate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (passwordProfile !== confirmPassword) {
       setAlert('Password and Confirm Password does not match!', 'info');
       return;
+    } else if (passwordProfile === '' || confirmPassword === '') {
+      setAlert('Provide password to continue!', 'info');
+      return;
+    } else {
+      updateProfile(username, emailProfile, passwordProfile, birthdayProfile);
+      setConfirmPassword('');
+      setPassword('');
     }
-    updateProfile(usernameProfile, emailProfile, password, birthdayProfile);
   };
 
   const handleUnregister = (e) => {
     e.preventDefault();
   };
 
-  const handleRemoveMovie = (movie) => {};
+  const handleRemoveMovie = (e) => {
+    e.preventDefault();
+  };
 
-  useEffect(() => {
-    getProfile(user, token);
-  }, [getProfile]);
+  const handleCancel = (e) => {
+    e.preventDefault();
+    history.push('/');
+  };
 
   return (
     <React.Fragment>
@@ -81,14 +92,6 @@ const ProfileView = ({
             </Accordion.Collapse>
           </Accordion>
           <Form>
-            <Form.Group style={{ display: 'none' }} controlId='formBasicText'>
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type='text'
-                value={usernameProfile}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Form.Group>
             <Form.Group controlId='formBasicEmail'>
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -103,6 +106,7 @@ const ProfileView = ({
                 type='password'
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder='Enter Password'
+                value={passwordProfile}
               />
             </Form.Group>
             <Form.Group controlId='formBasicConfirmPassword'>
@@ -111,6 +115,7 @@ const ProfileView = ({
                 type='password'
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder='Enter Confirm Password'
+                value={confirmPassword}
               />
             </Form.Group>
             <Form.Group controlId='formBasicBirthday'>
@@ -137,11 +142,7 @@ const ProfileView = ({
             >
               Unregister
             </Button>
-            <Button
-              onClick={() => history.push('/')}
-              variant='primary'
-              type='submit'
-            >
+            <Button onClick={handleCancel} variant='primary' type='submit'>
               Cancel
             </Button>
           </Form>
@@ -153,16 +154,14 @@ const ProfileView = ({
 
 ProfileView.propTypes = {
   profile: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
-  user: state.auth.userInfo.user.username,
-  token: state.auth.userInfo.token,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  user: state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
 export default withRouter(
-  connect(mapStateToProps, { setAlert, getProfile, updateProfile })(ProfileView)
+  connect(mapStateToProps, { setAlert, updateProfile, getProfile })(ProfileView)
 );

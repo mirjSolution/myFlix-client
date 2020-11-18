@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { getMovie } from '../../actions/movie';
 import { addToFavorites } from '../../actions/profile';
 import AlertView from '../alert-view/alert-view';
-import { TOGGLE_FILTER } from '../../actions/types';
 import './movie-view.scss';
 
 const MovieView = ({
@@ -88,12 +87,7 @@ const mapStateToProps = (state) => ({
     state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  dispatch({ type: TOGGLE_FILTER, payload: false });
-};
-
 export default connect(mapStateToProps, {
   getMovie,
   addToFavorites,
-  mapDispatchToProps,
 })(MovieView);
