@@ -8,6 +8,7 @@ import {
   updateProfile,
   getProfile,
   deleteProfile,
+  deleteToFavorites,
 } from '../../actions/profile';
 import {
   Form,
@@ -29,6 +30,7 @@ const ProfileView = ({
   token,
   user,
   deleteProfile,
+  deleteToFavorites,
   logout,
 }) => {
   useEffect(() => {
@@ -69,12 +71,12 @@ const ProfileView = ({
   const handleUnregister = (e) => {
     e.preventDefault();
     deleteProfile(username);
-    localStorage.clear();
-    history.push('/login');
+    logout();
   };
 
-  const handleRemoveMovie = (e) => {
-    e.preventDefault();
+  const handleRemoveMovie = (movie) => {
+    deleteToFavorites(user, movie);
+    getProfile(user, token);
   };
 
   const handleCancel = (e) => {
@@ -91,7 +93,6 @@ const ProfileView = ({
         </p>
 
         <div className='form-profile'>
-          <AlertView />
           <Modal show={show} onHide={handleClose} backdrop='static' centered>
             <Modal.Header closeButton>
               <Modal.Title>MyFlix Movie App</Modal.Title>
@@ -106,6 +107,7 @@ const ProfileView = ({
               </Button>
             </Modal.Footer>
           </Modal>
+          <AlertView />
           <Accordion className='favourite-movies primary' defaultActiveKey='0'>
             <Accordion.Toggle as={Card.Header} eventKey='1'>
               <i className='fas fa-plus'></i> List of Favourite Movies
@@ -120,7 +122,7 @@ const ProfileView = ({
                           <div>
                             <Link to={`/movies/${movie}`}>{movie}</Link>
                           </div>
-                          <div>
+                          <div onClick={() => handleRemoveMovie(movie)}>
                             <i className='fas fa-trash-alt'></i>
                           </div>
                         </ListGroup.Item>
@@ -198,8 +200,8 @@ ProfileView.propTypes = {
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
-  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
-  user: state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
+  token: state.auth.userInfo ? state.auth.userInfo.token : '',
+  user: state.auth.userInfo ? state.auth.userInfo.user.username : '',
 });
 
 export default withRouter(
@@ -208,6 +210,7 @@ export default withRouter(
     updateProfile,
     getProfile,
     deleteProfile,
+    deleteToFavorites,
     logout,
   })(ProfileView)
 );

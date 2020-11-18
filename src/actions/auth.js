@@ -54,7 +54,10 @@ export const register = (username, email, password, birthday) => {
           payload: res.data,
         });
         dispatch(
-          setAlert('User succefully registered, Welcome to MyFlix!', 'success')
+          setAlert(
+            'User successfully registered, Welcome to MyFlix!',
+            'success'
+          )
         );
       })
       .catch((err) => {

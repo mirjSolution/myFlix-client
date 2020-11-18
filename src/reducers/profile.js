@@ -3,6 +3,7 @@ import {
   GET_PROFILE,
   UPDATE_PROFILE,
   DELETE_PROFILE,
+  DELETE_FAVORITE,
 } from '../actions/types';
 
 const initialState = {
@@ -19,6 +20,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case ADD_TO_FAVORITES:
+    case DELETE_FAVORITE:
       return {
         ...state,
         favoriteMovies: payload,

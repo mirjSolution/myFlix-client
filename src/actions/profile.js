@@ -6,26 +6,41 @@ import {
   UPDATE_PROFILE,
   DELETE_PROFILE,
   PROFILE_ERROR,
+  DELETE_FAVORITE,
 } from './types';
 
-// Add to favorites
-export const addToFavorites = (username, title) => {
+// Add to favorite movie list
+export const addToFavorites = (usernameProfile, title) => {
   return (dispatch) => {
     axios
-      .post(`http://localhost:8080/users/${username}/movies/${title}`)
+      .post(`http://localhost:8080/users/${usernameProfile}/movies/${title}`)
       .then((res) => {
         dispatch({
           type: ADD_TO_FAVORITES,
           payload: res.data,
         });
-        dispatch(setAlert('Successfully added to favourites', 'success'));
+        dispatch(setAlert(res.data, 'info'));
       })
       .catch((err) => {
-        let errors = [];
-        errors.push(err.response.data);
-        if (errors) {
-          errors.forEach((error) => dispatch(setAlert(error, 'danger')));
-        }
+        dispatch(setAlert(err.response.data, 'info'));
+      });
+  };
+};
+
+// Delete Favorite Movie
+export const deleteToFavorites = (usernameProfile, movie) => {
+  return (dispatch) => {
+    axios
+      .delete(`http://localhost:8080/users/${usernameProfile}/movies/${movie}`)
+      .then((res) => {
+        dispatch({
+          type: DELETE_FAVORITE,
+          payload: res.data,
+        });
+        dispatch(setAlert('Successfully removed to favourites', 'danger'));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
