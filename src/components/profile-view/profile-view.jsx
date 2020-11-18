@@ -2,9 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setAlert } from '../../actions/alert.js';
-import { updateProfile, getProfile } from '../../actions/profile';
-import { Form, Button, Accordion, Card, ListGroup } from 'react-bootstrap';
+import { setAlert } from '../../actions/alert';
+import { logout } from '../../actions/auth';
+import {
+  updateProfile,
+  getProfile,
+  deleteProfile,
+} from '../../actions/profile';
+import {
+  Form,
+  Button,
+  Accordion,
+  Card,
+  ListGroup,
+  Modal,
+} from 'react-bootstrap';
 import AlertView from '../alert-view/alert-view';
 import './profile-view.scss';
 
@@ -16,6 +28,8 @@ const ProfileView = ({
   setAlert,
   token,
   user,
+  deleteProfile,
+  logout,
 }) => {
   useEffect(() => {
     getProfile(user, token);
@@ -32,7 +46,10 @@ const ProfileView = ({
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = (e) => {
+    e.preventDefault();
+    setShow(true);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,6 +68,9 @@ const ProfileView = ({
 
   const handleUnregister = (e) => {
     e.preventDefault();
+    deleteProfile(username);
+    localStorage.clear();
+    history.push('/login');
   };
 
   const handleRemoveMovie = (e) => {
@@ -69,8 +89,23 @@ const ProfileView = ({
         <p className=' text-center'>
           You can Update, Unregister and Remove your favourite movies from here
         </p>
+
         <div className='form-profile'>
           <AlertView />
+          <Modal show={show} onHide={handleClose} backdrop='static' centered>
+            <Modal.Header closeButton>
+              <Modal.Title>MyFlix Movie App</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to unregister?</Modal.Body>
+            <Modal.Footer>
+              <Button variant='primary' onClick={handleUnregister}>
+                Yes
+              </Button>
+              <Button variant='secondary' onClick={handleClose}>
+                No
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <Accordion className='favourite-movies primary' defaultActiveKey='0'>
             <Accordion.Toggle as={Card.Header} eventKey='1'>
               <i className='fas fa-plus'></i> List of Favourite Movies
@@ -140,7 +175,7 @@ const ProfileView = ({
               Update
             </Button>
             <Button
-              onClick={handleUnregister}
+              onClick={handleShow}
               variant='danger'
               type='submit'
               className='mr-2'
@@ -168,5 +203,11 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { setAlert, updateProfile, getProfile })(ProfileView)
+  connect(mapStateToProps, {
+    setAlert,
+    updateProfile,
+    getProfile,
+    deleteProfile,
+    logout,
+  })(ProfileView)
 );

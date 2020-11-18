@@ -79,9 +79,9 @@ MovieList.propTypes = {
 
 const mapStateToProps = (state) => ({
   movie: state.movie,
-  username: state.auth.userInfo.user.username,
+  username: state.auth.userInfo ? state.auth.userInfo.user.username : '',
   visibilityFilter: state.visibilityFilter.values,
-  token: state.auth.userInfo.token,
+  token: state.auth.userInfo ? state.auth.userInfo.token : '',
 });
 
 export default connect(mapStateToProps, { getMovies, getProfile })(MovieList);

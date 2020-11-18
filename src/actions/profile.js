@@ -3,8 +3,8 @@ import { setAlert } from './alert';
 import {
   ADD_TO_FAVORITES,
   GET_PROFILE,
-  TOGGLE_FILTER,
   UPDATE_PROFILE,
+  DELETE_PROFILE,
   PROFILE_ERROR,
 } from './types';
 
@@ -78,6 +78,23 @@ export const updateProfile = (
           type: PROFILE_ERROR,
           payload: err.response.data.statusText,
         });
+      });
+  };
+};
+
+// Delete Profile
+export const deleteProfile = (usernameProfile) => {
+  return (dispatch) => {
+    axios
+      .delete(`http://localhost:8080/users/${usernameProfile}`)
+      .then(() => {
+        dispatch({
+          type: DELETE_PROFILE,
+          payload: res.data,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
       });
   };
 };

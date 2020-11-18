@@ -76,5 +76,6 @@ export const register = (username, email, password, birthday) => {
 // Logout
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
-  location.reload();
+  localStorage.clear();
+  // location.reload();
 };
