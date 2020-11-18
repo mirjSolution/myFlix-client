@@ -29,6 +29,11 @@ const ProfileView = ({
   const [confirmPassword, setConfirmPassword] = useState('');
   const [birthdayProfile, setBirthday] = useState(convertDate);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (passwordProfile !== confirmPassword) {

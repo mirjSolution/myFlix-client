@@ -19,8 +19,8 @@ const MainViewNavbar = ({
   history,
   toggleFilter,
 }) => {
-  let isDisabled,
-    isVisible = true;
+  let isDisabled = true;
+  let isVisible = true;
 
   const [formSearch, setFormSearch] = useState({
     searchField: '',
@@ -54,6 +54,8 @@ const MainViewNavbar = ({
     logout();
     localStorage.clear();
   };
+
+  console.log(username);
 
   if (token) {
     isDisabled = false;

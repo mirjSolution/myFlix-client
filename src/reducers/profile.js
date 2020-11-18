@@ -2,6 +2,7 @@ import {
   ADD_TO_FAVORITES,
   GET_PROFILE,
   UPDATE_PROFILE,
+  DELETE_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -28,6 +29,17 @@ export default function (state = initialState, action) {
         ...state,
         content: payload,
       };
+    case DELETE_PROFILE: {
+      return {
+        ...state,
+        content: {
+          username: '',
+          email: '',
+          birthday: '',
+          favoriteMovies: [],
+        },
+      };
+    }
     default:
       return state;
   }
