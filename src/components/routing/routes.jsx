@@ -1,7 +1,8 @@
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+
 import MovieList from '../movies-list/movies-list';
 import MovieView from '../movie-view/movie-view';
 import GenreView from '../genre-view/genre-view';
@@ -9,6 +10,7 @@ import DirectorView from '../director-view/director-view';
 import LoginView from '../login-view/login-view';
 import ProfileView from '../profile-view/profile-view';
 import RegistrationView from '../registration-view/registratrion-view';
+import NotFound from '../../not-found-view/not-found-vies';
 
 const Routes = ({ auth }) => {
   return (
@@ -26,6 +28,7 @@ const Routes = ({ auth }) => {
           path='/movies/director/:directorName'
           component={DirectorView}
         />
+        <Route component={NotFound} />
       </Switch>
     </section>
   );
