@@ -28,6 +28,6 @@
   },
   "scripts": {
     "dev": "parcel public/index.html",
-    "build": "react-scripts build && echo '/* /index.html  404' | cat >build/_redirects "
+    "build": "react-scripts build && echo '/* /  404' | cat >build/_redirects "
   }
 }
