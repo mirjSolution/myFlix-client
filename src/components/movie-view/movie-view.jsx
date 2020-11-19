@@ -85,8 +85,9 @@ MovieView.propTypes = {
 
 const mapStateToProps = (state) => ({
   selectedMovie: state.movie.selectedMovie,
-  token: state.auth.userInfo.token,
-  username: state.auth.userInfo.user.username,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  username:
+    state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
 export default connect(mapStateToProps, {

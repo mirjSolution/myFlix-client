@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 
 import AlertView from '../alert-view/alert-view';
 import { setAlert } from '../../actions/alert';
+import { logout } from '../../actions/auth';
 import {
   updateProfile,
   getProfile,
@@ -80,8 +81,8 @@ const ProfileView = ({
   const handleUnregister = (e) => {
     e.preventDefault();
     deleteProfile(usernameProfile);
-    localStorage.clear();
     history.push('/login');
+    logout();
   };
 
   const handleRemoveMovie = (movie) => {
@@ -217,8 +218,9 @@ ProfileView.propTypes = {
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
-  token: state.auth.userInfo.token,
-  usernameProfile: state.auth.userInfo.user.username,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  usernameProfile:
+    state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
 });
 
 export default withRouter(
@@ -228,5 +230,6 @@ export default withRouter(
     getProfile,
     deleteProfile,
     deleteToFavorites,
+    logout,
   })(ProfileView)
 );

@@ -75,7 +75,7 @@ DirectorView.propTypes = {
 const mapStateToProps = (state) => ({
   selectedDirector: state.movie.selectedDirector,
   directorList: state.movie.directorList,
-  token: state.auth.userInfo.token,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
 });
 
 export default connect(mapStateToProps, { getMovieDirector })(DirectorView);

@@ -76,7 +76,7 @@ GenreView.propTypes = {
 const mapStateToProps = (state) => ({
   selectedGenre: state.movie.selectedGenre,
   genreList: state.movie.genreList,
-  token: state.auth.userInfo.token,
+  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
 });
 
 export default connect(mapStateToProps, { getMovieGenre })(GenreView);
