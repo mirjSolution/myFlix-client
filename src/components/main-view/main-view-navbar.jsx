@@ -54,7 +54,6 @@ const MainViewNavbar = ({
 
   const handleLogout = (e) => {
     e.preventDefault();
-    history.push('/login');
     logout();
   };
 
