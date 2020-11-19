@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -15,12 +15,10 @@ import NotFound from '../../not-found-view/not-found-vies';
 const Routes = ({ auth }) => {
   return (
     <section className='container'>
+      {!auth ? <Redirect to='/login' /> : <Redirect to='/' />}
       <Switch>
-        {!auth ? (
-          <Route exact path='/login' component={LoginView} />
-        ) : (
-          <Route exact path='/' component={MovieList} />
-        )}
+        <Route exact path='/login' component={LoginView} />
+        <Route exact path='/' component={MovieList} />
         <Route exact path='/register' component={RegistrationView} />
         <Route exact path='/profile' component={ProfileView} />
         <Route exact path='/movies/:title' component={MovieView} />
