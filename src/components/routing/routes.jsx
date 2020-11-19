@@ -10,7 +10,7 @@ import DirectorView from '../director-view/director-view';
 import LoginView from '../login-view/login-view';
 import ProfileView from '../profile-view/profile-view';
 import RegistrationView from '../registration-view/registratrion-view';
-import NotFound from '../../not-found-view/not-found-vies';
+import PrivateRoute from '../routing/privateroute';
 
 const Routes = ({ auth }) => {
   return (
@@ -18,24 +18,27 @@ const Routes = ({ auth }) => {
       {!auth ? <Redirect to='/login' /> : <Redirect to='/' />}
       <Switch>
         <Route exact path='/login' component={LoginView} />
-        <Route exact path='/' component={MovieList} />
-        <Route exact path='/register' component={RegistrationView} />
-        <Route exact path='/profile' component={ProfileView} />
-        <Route exact path='/movies/:title' component={MovieView} />
-        <Route exact path='/movies/genre/:genreName' component={GenreView} />
-        <Route
+        <PrivateRoute exact path='/' component={MovieList} />
+        <PrivateRoute exact path='/register' component={RegistrationView} />
+        <PrivateRoute exact path='/profile' component={ProfileView} />
+        <PrivateRoute exact path='/movies/:title' component={MovieView} />
+        <PrivateRoute
+          exact
+          path='/movies/genre/:genreName'
+          component={GenreView}
+        />
+        <PrivateRoute
           exact
           path='/movies/director/:directorName'
           component={DirectorView}
         />
-        <Route component={NotFound} />
       </Switch>
     </section>
   );
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth.userInfo,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(Routes);
