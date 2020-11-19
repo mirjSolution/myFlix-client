@@ -41,7 +41,7 @@ const ProfileView = ({
 
   useEffect(() => {
     getProfile(usernameProfile, token);
-  }, [favoriteMovies]);
+  }, [getProfile]);
 
   let convertDate = birthday.slice(0, 10);
 
@@ -87,6 +87,7 @@ const ProfileView = ({
 
   const handleRemoveMovie = (movie) => {
     deleteToFavorites(usernameProfile, movie);
+    getProfile(usernameProfile, token);
   };
 
   const handleCancel = (e) => {
