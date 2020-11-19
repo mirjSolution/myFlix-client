@@ -12,6 +12,7 @@ import ProfileView from '../profile-view/profile-view';
 import RegistrationView from '../registration-view/registratrion-view';
 
 const Routes = ({ auth }) => {
+  console.log(auth);
   return (
     <section className='container'>
       {!auth ? <Redirect to='/login' /> : <Redirect to='/' />}
@@ -33,7 +34,7 @@ const Routes = ({ auth }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  auth: state.auth.userInfo,
 });
 
 export default connect(mapStateToProps)(Routes);
