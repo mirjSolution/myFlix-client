@@ -6,7 +6,7 @@ It is a small movie app that includes authentication, profiles where you can cha
 
 ## Note
 
-In order to use the app, register first and if you want to see your added favourite movie list go to yur profile when a route not found it will redirect you to not found page.
+In order to use the app, register first and if you want to see your added favourite movie list go to your profile.
 
 ### Install Dependencies
 
