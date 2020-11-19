@@ -28,7 +28,7 @@ const Routes = ({ auth }) => {
           path='/movies/director/:directorName'
           component={DirectorView}
         />
-        <Route component={NotFound} />
+        <Route exact path='/' component={NotFound} />
       </Switch>
     </section>
   );
