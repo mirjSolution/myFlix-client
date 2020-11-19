@@ -27,7 +27,6 @@
     "sass": "^1.28.0"
   },
   "scripts": {
-    "dev": "parcel public/index.html",
-    "build": "react-scripts build && echo '/* /  404' | cat >build/_redirects "
+    "dev": "parcel public/index.html"
   }
 }
