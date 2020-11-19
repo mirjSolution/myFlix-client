@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
+
+import { Container, Row, Col } from 'react-bootstrap';
+
 import { getMovies } from '../../actions/movie';
 import { getProfile } from '../../actions/profile';
 import MovieCard from '../movie-card/movie-card';
 import AlertView from '../alert-view/alert-view';
+
 import './movies-list.scss';
 
 const MovieList = ({
@@ -21,7 +25,7 @@ const MovieList = ({
       getMovies(token);
       getProfile(username, token);
     }
-  }, [getMovies]);
+  }, [getMovies, getProfile]);
 
   let filteredMovies = movies,
     imageWidth;
@@ -74,14 +78,18 @@ const MovieList = ({
 
 MovieList.propTypes = {
   getMovies: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
+  visibilityFilter: PropTypes.string.isRequired,
   movie: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  movie: state.movie,
-  username: state.auth.userInfo ? state.auth.userInfo.user.username : '',
   visibilityFilter: state.visibilityFilter.values,
-  token: state.auth.userInfo ? state.auth.userInfo.token : '',
+  movie: state.movie,
+  username: state.auth.userInfo.user.username,
+  token: state.auth.userInfo.token,
 });
 
 export default connect(mapStateToProps, { getMovies, getProfile })(MovieList);

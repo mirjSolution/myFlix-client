@@ -2,18 +2,20 @@ import axios from 'axios';
 import { setAlert } from './alert';
 import {
   ADD_TO_FAVORITES,
+  DELETE_FAVORITE,
   GET_PROFILE,
   UPDATE_PROFILE,
   DELETE_PROFILE,
   PROFILE_ERROR,
-  DELETE_FAVORITE,
 } from './types';
 
 // Add to favorite movie list
 export const addToFavorites = (usernameProfile, title) => {
   return (dispatch) => {
     axios
-      .post(`http://localhost:8080/users/${usernameProfile}/movies/${title}`)
+      .post(
+        `https://myflix3.herokuapp.com/users/${usernameProfile}/movies/${title}`
+      )
       .then((res) => {
         dispatch({
           type: ADD_TO_FAVORITES,
@@ -31,7 +33,9 @@ export const addToFavorites = (usernameProfile, title) => {
 export const deleteToFavorites = (usernameProfile, movie) => {
   return (dispatch) => {
     axios
-      .delete(`http://localhost:8080/users/${usernameProfile}/movies/${movie}`)
+      .delete(
+        `https://myflix3.herokuapp.com/users/${usernameProfile}/movies/${movie}`
+      )
       .then((res) => {
         dispatch({
           type: DELETE_FAVORITE,
@@ -49,7 +53,7 @@ export const deleteToFavorites = (usernameProfile, movie) => {
 export const getProfile = (username, token) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:8080/users/${username}`, {
+      .get(`https://myflix3.herokuapp.com/users/${username}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -68,7 +72,7 @@ export const updateProfile = (
 ) => {
   return (dispatch) => {
     axios
-      .put(`http://localhost:8080/users/${usernameProfile}`, {
+      .put(`https://myflix3.herokuapp.com/users/${usernameProfile}`, {
         username: usernameProfile,
         email: emailProfile,
         password: password,
@@ -101,7 +105,7 @@ export const updateProfile = (
 export const deleteProfile = (usernameProfile) => {
   return (dispatch) => {
     axios
-      .delete(`http://localhost:8080/users/${usernameProfile}`)
+      .delete(`https://myflix3.herokuapp.com/users/${usernameProfile}`)
       .then(() => {
         dispatch({
           type: DELETE_PROFILE,

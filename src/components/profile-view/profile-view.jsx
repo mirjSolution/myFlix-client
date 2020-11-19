@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { setAlert } from '../../actions/alert';
-import { logout } from '../../actions/auth';
-import {
-  updateProfile,
-  getProfile,
-  deleteProfile,
-  deleteToFavorites,
-} from '../../actions/profile';
+
 import {
   Form,
   Button,
@@ -18,7 +10,18 @@ import {
   ListGroup,
   Modal,
 } from 'react-bootstrap';
+
+import { connect } from 'react-redux';
+
 import AlertView from '../alert-view/alert-view';
+import { setAlert } from '../../actions/alert';
+import {
+  updateProfile,
+  getProfile,
+  deleteProfile,
+  deleteToFavorites,
+} from '../../actions/profile';
+
 import './profile-view.scss';
 
 const ProfileView = ({
@@ -28,18 +31,19 @@ const ProfileView = ({
   getProfile,
   setAlert,
   token,
-  user,
+  usernameProfile,
   deleteProfile,
   deleteToFavorites,
   logout,
 }) => {
-  useEffect(() => {
-    getProfile(user, token);
-  }, [getProfile]);
+  const { email, birthday, favoriteMovies } = content;
 
-  const { username, email, birthday, favoriteMovies } = content;
+  useEffect(() => {
+    getProfile(usernameProfile, token);
+  }, [favoriteMovies]);
 
   let convertDate = birthday.slice(0, 10);
+
   const [emailProfile, setEmail] = useState(email);
   const [passwordProfile, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -62,7 +66,12 @@ const ProfileView = ({
       setAlert('Provide password to continue!', 'info');
       return;
     } else {
-      updateProfile(username, emailProfile, passwordProfile, birthdayProfile);
+      updateProfile(
+        usernameProfile,
+        emailProfile,
+        passwordProfile,
+        birthdayProfile
+      );
       setConfirmPassword('');
       setPassword('');
     }
@@ -70,13 +79,13 @@ const ProfileView = ({
 
   const handleUnregister = (e) => {
     e.preventDefault();
-    deleteProfile(username);
-    logout();
+    deleteProfile(usernameProfile);
+    localStorage.clear();
+    history.push('/login');
   };
 
   const handleRemoveMovie = (movie) => {
-    deleteToFavorites(user, movie);
-    getProfile(user, token);
+    deleteToFavorites(usernameProfile, movie);
   };
 
   const handleCancel = (e) => {
@@ -196,12 +205,20 @@ const ProfileView = ({
 
 ProfileView.propTypes = {
   profile: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  usernameProfile: PropTypes.string.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  updateProfile: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
+  deleteProfile: PropTypes.func.isRequired,
+  deleteToFavorites: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
-  token: state.auth.userInfo ? state.auth.userInfo.token : '',
-  user: state.auth.userInfo ? state.auth.userInfo.user.username : '',
+  token: state.auth.userInfo.token,
+  usernameProfile: state.auth.userInfo.user.username,
 });
 
 export default withRouter(
@@ -211,6 +228,5 @@ export default withRouter(
     getProfile,
     deleteProfile,
     deleteToFavorites,
-    logout,
   })(ProfileView)
 );

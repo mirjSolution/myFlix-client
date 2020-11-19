@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { getMovieDirector } from '../../actions/movie';
 import MovieCard from '../movie-card/movie-card';
 
@@ -15,19 +16,19 @@ const DirectorView = ({
   token,
 }) => {
   let imageWidth;
+
   useEffect(() => {
-    if (token !== '') {
-      getMovieDirector(match.params.directorName, token);
-    }
-  }, [getMovieDirector, match.params.directorName]);
+    getMovieDirector(match.params.directorName, token);
+  }, [getMovieDirector]);
 
   if (directorList.length === 1 || directorList.length === 2) {
     imageWidth = '340px';
   }
+
   return (
     <section className='director-description text-center'>
       <p>Director Description</p>
-      <p className='text-danger'>{directorName}</p>
+      <h2 className='text-danger'>{directorName}</h2>
       <p>{directorBio}</p>
       <p>Birth: {directorBirth}</p>
       <p>{directorDeath ? `Death: ${directorDeath}` : ''}</p>
@@ -68,12 +69,13 @@ DirectorView.propTypes = {
   getMovieDirector: PropTypes.func.isRequired,
   selectedDirector: PropTypes.object.isRequired,
   directorList: PropTypes.array.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedDirector: state.movie.selectedDirector,
   directorList: state.movie.directorList,
-  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
+  token: state.auth.userInfo.token,
 });
 
 export default connect(mapStateToProps, { getMovieDirector })(DirectorView);

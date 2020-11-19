@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+import { Card, Button } from 'react-bootstrap';
+
 import { getMovie } from '../../actions/movie';
 import { addToFavorites } from '../../actions/profile';
 import AlertView from '../alert-view/alert-view';
+
 import './movie-view.scss';
 
 const MovieView = ({
@@ -18,10 +21,8 @@ const MovieView = ({
   history,
 }) => {
   useEffect(() => {
-    if (token !== '') {
-      getMovie(match.params.title, token);
-    }
-  }, [getMovie, match.params.title]);
+    getMovie(match.params.title, token);
+  }, [getMovie]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,13 +79,14 @@ MovieView.propTypes = {
   getMovie: PropTypes.func.isRequired,
   addToFavorites: PropTypes.func.isRequired,
   selectedMovie: PropTypes.object.isRequired,
+  token: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedMovie: state.movie.selectedMovie,
-  token: state.auth.userInfo === null ? '' : state.auth.userInfo.token,
-  username:
-    state.auth.userInfo === null ? '' : state.auth.userInfo.user.username,
+  token: state.auth.userInfo.token,
+  username: state.auth.userInfo.user.username,
 });
 
 export default connect(mapStateToProps, {

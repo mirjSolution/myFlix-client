@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
-  GET_MOVIES,
   GET_MOVIE,
+  GET_MOVIES,
   GET_GENRE,
   GET_DIRECTOR,
   TOGGLE_FILTER,
@@ -11,7 +11,7 @@ import {
 export const getMovies = (token) => {
   return (dispatch) => {
     axios
-      .get('http://localhost:8080/movies', {
+      .get('https://myflix3.herokuapp.com/movies', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -26,7 +26,7 @@ export const getMovies = (token) => {
 export const getMovie = (title, token) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:8080/movies/${title}`, {
+      .get(`https://myflix3.herokuapp.com/movies/${title}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -41,7 +41,7 @@ export const getMovie = (title, token) => {
 export const getMovieGenre = (genreName, token) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:8080/movies/genre/${genreName}`, {
+      .get(`https://myflix3.herokuapp.com/movies/genre/${genreName}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -56,7 +56,7 @@ export const getMovieGenre = (genreName, token) => {
 export const getMovieDirector = (directorName, token) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:8080/movies/director/${directorName}`, {
+      .get(`https://myflix3.herokuapp.com/movies/director/${directorName}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AlertView from '../alert-view/alert-view';
-import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+
+import { Form, Button } from 'react-bootstrap';
+
+import AlertView from '../alert-view/alert-view';
 import { login } from '../../actions/auth';
 
 import './login-view.scss';

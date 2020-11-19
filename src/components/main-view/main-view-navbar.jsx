@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+
+import { Navbar, Nav } from 'react-bootstrap';
+
 import { setFilter } from '../../actions/visibilityFilter';
 import { logout } from '../../actions/auth';
 import { toggleFilter } from '../../actions/toggle.js';
-import logo from '../../../public/images/logo.svg';
 import VisibilityFilterInput from '../visiblity-filter-input/visibility-filter-input';
+
+import logo from '../../../public/images/logo.svg';
 
 import './main-view.scss';
 
@@ -30,7 +34,7 @@ const MainViewNavbar = ({
 
   useEffect(() => {
     setFilter(searchField);
-  }, [setFilter, searchField]);
+  }, [searchField]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -106,6 +110,8 @@ MainViewNavbar.propTypes = {
   setFilter: PropTypes.func.isRequired,
   toggleFilter: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

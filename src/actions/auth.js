@@ -1,18 +1,18 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGOUT,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
 } from './types';
 
 // Login User
 export const login = (username, password) => {
   return (dispatch) => {
     axios
-      .post('http://localhost:8080/auth/login', {
+      .post('https://myflix3.herokuapp.com/auth/login', {
         username: username,
         password: password,
       })
@@ -41,7 +41,7 @@ export const login = (username, password) => {
 export const register = (username, email, password, birthday) => {
   return (dispatch) => {
     axios
-      .post('http://localhost:8080/users', {
+      .post('https://myflix3.herokuapp.com/users', {
         username: username,
         email: email,
         password: password,
@@ -80,5 +80,5 @@ export const register = (username, email, password, birthday) => {
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.clear();
-  // location.reload();
+  location.reload();
 };
