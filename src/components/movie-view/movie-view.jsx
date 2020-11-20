@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Card, Button } from 'react-bootstrap';
 
 import { getMovie } from '../../actions/movie';
-import { addToFavorites } from '../../actions/profile';
+import { addToFavorites, getProfile } from '../../actions/profile';
 import AlertView from '../alert-view/alert-view';
 
 import './movie-view.scss';
@@ -17,6 +17,7 @@ const MovieView = ({
   match,
   token,
   addToFavorites,
+  getProfile,
   username,
   history,
 }) => {
@@ -27,6 +28,7 @@ const MovieView = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     addToFavorites(username, match.params.title);
+    getProfile(username, token);
   };
 
   const handleBack = () => {
@@ -77,6 +79,7 @@ const MovieView = ({
 
 MovieView.propTypes = {
   getMovie: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
   addToFavorites: PropTypes.func.isRequired,
   selectedMovie: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
@@ -92,5 +95,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getMovie,
+  getProfile,
   addToFavorites,
 })(MovieView);

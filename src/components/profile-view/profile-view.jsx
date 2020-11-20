@@ -17,8 +17,8 @@ import AlertView from '../alert-view/alert-view';
 import { setAlert } from '../../actions/alert';
 import { logout } from '../../actions/auth';
 import {
-  updateProfile,
   getProfile,
+  updateProfile,
   deleteProfile,
   deleteToFavorites,
 } from '../../actions/profile';
@@ -28,8 +28,8 @@ import './profile-view.scss';
 const ProfileView = ({
   profile: { content },
   history,
-  updateProfile,
   getProfile,
+  updateProfile,
   setAlert,
   token,
   usernameProfile,
@@ -210,8 +210,8 @@ ProfileView.propTypes = {
   token: PropTypes.string.isRequired,
   usernameProfile: PropTypes.string.isRequired,
   setAlert: PropTypes.func.isRequired,
-  updateProfile: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
+  updateProfile: PropTypes.func.isRequired,
   deleteProfile: PropTypes.func.isRequired,
   deleteToFavorites: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
@@ -227,8 +227,8 @@ const mapStateToProps = (state) => ({
 export default withRouter(
   connect(mapStateToProps, {
     setAlert,
-    updateProfile,
     getProfile,
+    updateProfile,
     deleteProfile,
     deleteToFavorites,
     logout,
