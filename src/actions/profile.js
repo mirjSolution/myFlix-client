@@ -49,7 +49,7 @@ export const deleteToFavorites = (usernameProfile, movie) => {
   };
 };
 
-// Get Single Movie
+// Get Single Pofile
 export const getProfile = (username, token) => {
   return (dispatch) => {
     axios
