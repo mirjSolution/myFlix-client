@@ -1,0 +1,77 @@
+.form-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.form-register #formBasicBirthday {
+  width: 250px;
+}
+.form-register .action-button {
+  display: flex;
+  flex-direction: row;
+}
+.profile-view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.profile-view .form-register .card {
+  padding: 10px;
+  height: 500px;
+}
+.profile-view .favorite-movies .card {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  height: 500px;
+  width: 335px;
+}
+
+@media all and (max-width: 750px) {
+  .profile-view {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+  }
+}
+.genre-view {
+  color: black !important;
+}
+.form-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.movie-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-poster {
+  height: 250px;
+  width: 250px;
+  cursor: pointer;
+}
+.movie-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.main-body {
+  margin-top: 100px;
+  margin-bottom: 250px;
+}
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  font-family: "Orbitron", sans-serif;
+}
+
+/*# sourceMappingURL=/src.78399e21.css.map */
