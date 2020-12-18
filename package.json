@@ -29,7 +29,7 @@
   },
   "scripts": {
     "dev": "parcel public/index.html",
-    "predeploy": "rm -rf dist && parcel build public/index.html --public-url /myflix-client/",
+    "predeploy": "rm -rf dist && parcel build public/index.html --public-url '.'",
     "deploy": "gh-pages -d dist"
   }
 }

@@ -24,7 +24,7 @@ npm run dev
 
 ## Demo
 
-The APP is live at [mirjsolution.github.io/myflix-clent](https://mirjsolution.github.io/myFlix-client/)
+The APP is live at (https://mirjsolution.github.io/myFlix-client/)
 
 - Version: 1.0.0
 - License: MIT
