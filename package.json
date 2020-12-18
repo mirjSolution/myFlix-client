@@ -29,11 +29,9 @@
     "shx": "^0.3.2"
   },
   "scripts": {
-    "dev": "parcel ./public/index.html",
-    "prebuild-dev": "shx rm -rf dist/*",
-    "build-dev": "parcel build ./public/index.html --no-minify --public-url ./",
+    "dev": "parcel public/index.html",
     "prebuild": "shx rm -rf dist/*",
-    "build": "parcel build ./public/index.html --public-url ./",
+    "build": "parcel build public/index.html --public-url",
     "push-gh-pages": "gh-pages -d dist"
   }
 }
