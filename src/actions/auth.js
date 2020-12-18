@@ -80,5 +80,4 @@ export const register = (username, email, password, birthday) => {
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.clear();
-  location.reload();
 };
