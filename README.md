@@ -22,7 +22,10 @@ npm install
 npm run dev
 ```
 
-## App Info
+## Demo
+
+The APP is live at [mirjsolution.github.io/myflix-clent](https://mirjsolution.github.io/login)
 
 - Version: 1.0.0
+- License: MIT
 - Author: Rico John Dato-on
