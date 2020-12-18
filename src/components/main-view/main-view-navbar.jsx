@@ -75,11 +75,12 @@ const MainViewNavbar = ({
         >
           <Navbar.Brand>
             <Link to='/'>
-              <img
+              {/*<img
                 src={logo}
                 className='d-inline-block align-top'
                 alt='React Bootstrap logo'
-              />
+              />*/}
+              <h1>MyFlix</h1>
             </Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />

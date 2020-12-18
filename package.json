@@ -24,9 +24,16 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "sass": "^1.28.0"
+    "gh-pages": "^3.1.0",
+    "sass": "^1.28.0",
+    "shx": "^0.3.2"
   },
   "scripts": {
-    "dev": "parcel public/index.html"
+    "dev": "parcel ./public/index.html",
+    "prebuild-dev": "shx rm -rf dist/*",
+    "build-dev": "parcel build ./public/index.html --no-minify --public-url ./",
+    "prebuild": "shx rm -rf dist/*",
+    "build": "parcel build ./public/index.html --public-url ./",
+    "push-gh-pages": "gh-pages -d dist"
   }
 }
